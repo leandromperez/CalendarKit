@@ -86,7 +86,7 @@ open class EventView: UIView {
     context!.interpolationQuality = .none
     context?.saveGState()
     context?.setStrokeColor(color.cgColor)
-    context?.setLineWidth(5)
+    context?.setLineWidth(9)
     context?.translateBy(x: 0, y: 0.5)
     let x: CGFloat = 0
     let y: CGFloat = 0
