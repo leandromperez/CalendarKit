@@ -86,7 +86,7 @@ open class EventView: UIView {
     context!.interpolationQuality = .none
     context?.saveGState()
     context?.setStrokeColor(color.cgColor)
-    context?.setLineWidth(3)
+    context?.setLineWidth(9)
     context?.translateBy(x: 0, y: 0.5)
     let x: CGFloat = 0
     let y: CGFloat = 0
@@ -101,7 +101,7 @@ open class EventView: UIView {
 
   override open func layoutSubviews() {
     super.layoutSubviews()
-    textView.fillSuperview()
+    textView.fillSuperview(left: 15)
     let first = eventResizeHandles.first
     let last = eventResizeHandles.last
     let radius: CGFloat = 40
