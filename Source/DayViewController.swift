@@ -2,107 +2,119 @@ import UIKit
 import DateToolsSwift
 
 open class DayViewController: UIViewController, EventDataSource, DayViewDelegate {
-  public lazy var dayView: DayView = DayView()
-  public var dataSource: EventDataSource? {
-    get {
-      return dayView.dataSource
+    public var calendarStyle: CalendarStyle
+
+    public init(calendarStyle: CalendarStyle) {
+        self.calendarStyle = calendarStyle
+        super.init(nibName: nil, bundle: nil)
     }
-    set(value) {
-      dayView.dataSource = value
+
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-  }
 
-  public var delegate: DayViewDelegate? {
-    get {
-      return dayView.delegate
+    public lazy var dayView: DayView = DayView()
+    public var dataSource: EventDataSource? {
+        get {
+            return dayView.dataSource
+        }
+        set(value) {
+            dayView.dataSource = value
+        }
     }
-    set(value) {
-      dayView.delegate = value
+
+    public var delegate: DayViewDelegate? {
+        get {
+            return dayView.delegate
+        }
+        set(value) {
+            dayView.delegate = value
+        }
     }
-  }
 
-  public var calendar = Calendar.autoupdatingCurrent {
-    didSet {
-      dayView.calendar = calendar
+    public var calendar = Calendar.autoupdatingCurrent {
+        didSet {
+            dayView.calendar = calendar
+        }
     }
-  }
 
-  open override func loadView() {
-    view = dayView
-  }
+    open override func loadView() {
+        view = dayView
+    }
 
-  override open func viewDidLoad() {
-    super.viewDidLoad()
-    edgesForExtendedLayout = []
-    view.tintColor = UIColor.red
-    dataSource = self
-    delegate = self
-    dayView.reloadData()
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        edgesForExtendedLayout = []
+        view.tintColor = UIColor.red
+        dataSource = self
+        delegate = self
+        dayView.reloadData()
 
-    let sizeClass = traitCollection.horizontalSizeClass
-    configureDayViewLayoutForHorizontalSizeClass(sizeClass)
-  }
+        let sizeClass = traitCollection.horizontalSizeClass
+        configureDayViewLayoutForHorizontalSizeClass(sizeClass)
+    }
 
-  open override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    dayView.scrollToFirstEventIfNeeded()
-  }
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        dayView.scrollToFirstEventIfNeeded()
+    }
 
-  open override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-    super.willTransition(to: newCollection, with: coordinator)
-    configureDayViewLayoutForHorizontalSizeClass(newCollection.horizontalSizeClass)
-  }
+    open override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        configureDayViewLayoutForHorizontalSizeClass(newCollection.horizontalSizeClass)
+    }
 
-  func configureDayViewLayoutForHorizontalSizeClass(_ sizeClass: UIUserInterfaceSizeClass) {
-    dayView.transitionToHorizontalSizeClass(sizeClass)
-  }
+    func configureDayViewLayoutForHorizontalSizeClass(_ sizeClass: UIUserInterfaceSizeClass) {
+        dayView.transitionToHorizontalSizeClass(sizeClass)
+    }
 
-  open func reloadData() {
-    dayView.reloadData()
-  }
+    open func reloadData() {
+        dayView.reloadData()
+    }
 
-  open func updateStyle(_ newStyle: CalendarStyle) {
-    dayView.updateStyle(newStyle)
-  }
+    open func updateStyle(_ newStyle: CalendarStyle) {
+        dayView.updateStyle(newStyle)
+    }
 
-  open func eventsForDate(_ date: Date) -> [EventDescriptor] {
-    return [Event]()
-  }
+    open func eventsForDate(_ date: Date) -> [EventDescriptor] {
+        return [Event]()
+    }
 
-  // MARK: - DayViewDelegate
+    // MARK: - DayViewDelegate
 
-  open func dayViewDidSelectEventView(_ eventView: EventView) {
-  }
+    open func dayViewDidSelectEventView(_ eventView: EventView) {
+    }
 
-  open func dayViewDidLongPressEventView(_ eventView: EventView) {
-  }
+    open func dayViewDidLongPressEventView(_ eventView: EventView) {
+    }
 
-  open func dayView(dayView: DayView, didTapTimelineAt date: Date) {
-  }
+    open func dayView(dayView: DayView, didTapTimelineAt date: Date) {
+    }
 
-  open func dayView(dayView: DayView, willMoveTo date: Date) {
-  }
+    open func dayView(dayView: DayView, willMoveTo date: Date) {
+    }
 
-  open func dayView(dayView: DayView, didMoveTo date: Date) {
-  }
+    open func dayView(dayView: DayView, didMoveTo date: Date) {
+    }
 
-  open func dayView(dayView: DayView, didLongPressTimelineAt date: Date) {
-  }
+    open func dayView(dayView: DayView, didLongPressTimelineAt date: Date) {
+    }
 
-  open func dayView(dayView: DayView, didUpdate event: EventDescriptor) {
-  }
-  
-  // MARK: - Editing
-  
-  open func create(event: EventDescriptor, animated: Bool = false) {
-    dayView.create(event: event, animated: animated)
-  }
+    open func dayView(dayView: DayView, didUpdate event: EventDescriptor) {
+    }
 
-  open func beginEditing(event: EventDescriptor, animated: Bool = false) {
-    dayView.beginEditing(event: event, animated: animated)
-  }
-  
-  open func endEventEditing() {
-    dayView.endEventEditing()
-  }
+    // MARK: - Editing
+
+    open func create(event: EventDescriptor, animated: Bool = false) {
+        dayView.create(event: event, animated: animated)
+    }
+
+    open func beginEditing(event: EventDescriptor, animated: Bool = false) {
+        dayView.beginEditing(event: event, animated: animated)
+    }
+
+    open func endEventEditing() {
+        dayView.endEventEditing()
+    }
 }
+

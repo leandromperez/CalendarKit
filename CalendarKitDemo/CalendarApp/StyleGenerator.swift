@@ -2,7 +2,9 @@ import CalendarKit
 
 struct StyleGenerator {
   static func defaultStyle() -> CalendarStyle {
-    return CalendarStyle()
+    var style = CalendarStyle()
+    style.timeline.verticalDiff = 100
+    return style
   }
 
   static func darkStyle() -> CalendarStyle {
@@ -35,7 +37,7 @@ struct StyleGenerator {
     timeline.backgroundColor = black
     timeline.allDayStyle.backgroundColor = darkGray
     timeline.allDayStyle.allDayColor = white
-
+    timeline.verticalDiff = 100
     var style = CalendarStyle()
     style.header = header
     style.timeline = timeline
