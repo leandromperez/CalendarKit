@@ -102,6 +102,8 @@ open class EventView: UIView {
   override open func layoutSubviews() {
     super.layoutSubviews()
     textView.fillSuperview(left: 15)
+    textView.textAlignment = .left
+    textView.centerVertically()
     let first = eventResizeHandles.first
     let last = eventResizeHandles.last
     let radius: CGFloat = 40
@@ -159,3 +161,13 @@ open class EventView: UIView {
   }
 }
 
+
+extension UITextView {
+    func centerVertically() {
+        let fittingSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
+        let size = sizeThatFits(fittingSize)
+        let topOffset = (bounds.size.height - size.height * zoomScale) / 2
+        let positiveTopOffset = max(0, topOffset)
+        contentOffset.y = -positiveTopOffset
+    }
+}
