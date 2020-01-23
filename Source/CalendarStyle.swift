@@ -12,9 +12,14 @@ public enum DateStyle {
 }
 
 public struct CalendarStyle {
-  public var header = DayHeaderStyle()
-  public var timeline = TimelineStyle()
-  public init() {}
+    public var header : DayHeaderStyle
+    public var timeline : TimelineStyle
+
+    public init(timelineStyle:TimelineStyle = TimelineStyle(),
+                headerStyle : DayHeaderStyle = DayHeaderStyle() ) {
+        self.timeline = timelineStyle
+        self.header = headerStyle
+    }
 }
 
 public struct DayHeaderStyle {

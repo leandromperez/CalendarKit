@@ -57,7 +57,7 @@ class CustomCalendarExampleController: DayViewController, DatePickerControllerDe
 
     override func loadView() {
         calendar = customCalendar
-        dayView = DayView(calendar: calendar)
+        dayView = DayView(calendar: calendar, style: self.calendarStyle)
         dayView.isHeaderViewVisible = false
 
         view = dayView
