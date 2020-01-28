@@ -263,19 +263,7 @@ public class TimelineView: UIView {
 
         for (i, time) in times.enumerated() {
             let iFloat = CGFloat(i)
-            let context = UIGraphicsGetCurrentContext()
-            context!.interpolationQuality = .none
-            context?.saveGState()
-            context?.setStrokeColor(self.style.lineColor.cgColor)
-            context?.setLineWidth(onePixel)
-            context?.translateBy(x: 0, y: 0.5)
-            let x: CGFloat = 53
-            let y = style.verticalInset + iFloat * style.verticalDiff
-            context?.beginPath()
-            context?.move(to: CGPoint(x: x, y: y))
-            context?.addLine(to: CGPoint(x: (bounds).width, y: y))
-            context?.strokePath()
-            context?.restoreGState()
+            self.addTimeLineFor(hourFloat: iFloat)
 
             if i == hourToRemoveIndex { continue }
 
@@ -285,6 +273,10 @@ public class TimelineView: UIView {
 
             let timeString = NSString(string: time)
             timeString.draw(in: timeRect, withAttributes: attributes)
+
+            if style.showHalfHoursSeparator {
+                self.addTimeLineFor(hourFloat: iFloat, offset: style.verticalDiff * 0.5)
+            }
 
             if accentedMinute == 0 {
                 continue
@@ -296,7 +288,25 @@ public class TimelineView: UIView {
                 let timeString = NSString(string: ":\(accentedMinute)")
                 timeString.draw(in: timeRect, withAttributes: attributes)
             }
+
         }
+    }
+
+    private func addTimeLineFor(hourFloat: CGFloat, offset: CGFloat = 0) {
+        let context = UIGraphicsGetCurrentContext()
+        context!.interpolationQuality = .none
+        context?.saveGState()
+        context?.setStrokeColor(self.style.lineColor.cgColor)
+        context?.setLineWidth(onePixel)
+        context?.translateBy(x: 0, y: 0.5)
+        let x: CGFloat = 53
+        let y = style.verticalInset + hourFloat * style.verticalDiff + offset
+
+        context?.beginPath()
+        context?.move(to: CGPoint(x: x, y: y))
+        context?.addLine(to: CGPoint(x: (bounds).width, y: y))
+        context?.strokePath()
+        context?.restoreGState()
     }
 
     // MARK: - Layout

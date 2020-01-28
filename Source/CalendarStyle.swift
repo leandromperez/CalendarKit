@@ -75,6 +75,7 @@ public struct TimelineStyle {
   public var verticalInset: CGFloat = 10
   public var leftInset: CGFloat = 53
   public var eventGap: CGFloat = 0
+  public var showHalfHoursSeparator: Bool = false
   public init() {}
 }
 
